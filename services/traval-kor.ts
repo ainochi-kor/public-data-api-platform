@@ -1,4 +1,4 @@
-import { GetlocationBasedListParam } from "@/types/traval.type";
+import { GetlocationBasedListDataResponse, GetlocationBasedListParam } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
 
@@ -18,7 +18,9 @@ export default class TravalServices {
     this.axios = axios;
   }
 
-  getlocationBasedList(params: GetlocationBasedListParam): Promise<any> {
+  getlocationBasedList(params: GetlocationBasedListParam): Promise<{
+    response: GetlocationBasedListDataResponse;
+  }> {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/locationBasedList1", { params })
