@@ -1,10 +1,5 @@
 import Button from "@/components/Button";
-import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetlocationBasedListParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { use, useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const router = useRouter();

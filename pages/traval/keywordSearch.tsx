@@ -1,13 +1,10 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import {
-  GetlocationBasedListParam,
-  KeywardSearchParam,
-} from "@/types/traval.type";
+import { KeywardSearchParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 const KeywordSearch: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
