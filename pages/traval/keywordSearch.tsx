@@ -43,39 +43,40 @@ const KeywordSearch: NextPage = () => {
   }
 
   return (
-    <div className="w-full">
-      <h1 className="text-3xl">키워드 검색 조회</h1>
-      <div className="flex items-center space-x-2 py-4 ">
-        <input
-          className="px-2 h-10 bg-gray-100 rounded-lg"
-          type="text"
-          placeholder="강원"
-          value={keyword}
-          onChange={handleChangeKeyword}
-        />
-        <Button
-          onClick={() => {
-            refetch();
-          }}
-        >
-          검색하기
-        </Button>
-      </div>
-
-      <div className="flex justify-between font-mono text-sm flex-wrap">
+    <div className="py-4">
+      <header className="px-8 pb-4">
+        <h1 className="text-3xl">키워드 검색 조회</h1>
+        <div className="flex items-center space-x-2 py-4 ">
+          <input
+            className="px-2 h-10 bg-gray-100 rounded-lg"
+            type="text"
+            placeholder="강원"
+            value={keyword}
+            onChange={handleChangeKeyword}
+          />
+          <Button
+            onClick={() => {
+              refetch();
+            }}
+          >
+            검색하기
+          </Button>
+        </div>
+      </header>
+      <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body.items.item.map((data) => {
           return (
-            <div key={data.title} className="border p-2">
+            <div key={data.title} className="border py-2">
               {data.title}
               <Image
                 src={data.firstimage}
-                width={400}
-                height={400}
+                width={300}
+                height={300}
                 alt={data.title}
               />
               {Object.keys(data).map((key) => {
                 return (
-                  <p key={key}>
+                  <p key={key} className="truncate ">
                     {key}: {data[key as keyof typeof data]}
                   </p>
                 );
@@ -83,7 +84,7 @@ const KeywordSearch: NextPage = () => {
             </div>
           );
         })}
-      </div>
+      </div>{" "}
     </div>
   );
 };

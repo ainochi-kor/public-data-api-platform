@@ -70,8 +70,8 @@ const LocationBase: NextPage = () => {
   }
 
   return (
-    <div className="w-full">
-      <div className="py-4 space-y-4">
+    <div className="py-4">
+      <header className="px-8 pb-4 space-y-4">
         <h1 className="text-3xl">위치기반 관광정보조회 </h1>
         <Button
           onClick={() => {
@@ -80,9 +80,9 @@ const LocationBase: NextPage = () => {
         >
           다시 불러오기
         </Button>
-      </div>
-      <div className="flex items-center justify-between font-mono text-sm  flex-wrap">
-        {data?.response?.body.items.item.map((data) => {
+      </header>
+      <div className="font-mono text-sm w-screen px-8">
+        {data?.response?.body.items.item?.map((data) => {
           return (
             <div key={data.title} className="border p-2">
               {data.title}
@@ -94,7 +94,7 @@ const LocationBase: NextPage = () => {
               />
               {Object.keys(data).map((key) => {
                 return (
-                  <p key={key}>
+                  <p key={key} className="truncate ">
                     {key}: {data[key as keyof typeof data]}
                   </p>
                 );
