@@ -1,28 +1,26 @@
 import { useRouter } from "next/router";
+import Button from "../Button";
 
 const Header: React.FC = () => {
   const router = useRouter();
   return (
     <div className="w-full h-13 flex justify-between items-center p-2 border-b-2 border-b-blue-200">
-      <button
-        className="bg-blue-200 text-blue-600 px-3 py-2 rounded-lg"
+      <Button
         onClick={() => {
           router.back();
         }}
       >
         Go Back
-      </button>
+      </Button>
 
-      <button
-        className="bg-blue-200 text-blue-600 px-3 py-2 rounded-lg"
+      <Button
         onClick={() => {
           router.push("/");
         }}
       >
         Go Home
-      </button>
-      <button
-        className="bg-blue-200 text-blue-600 px-3 py-2 rounded-lg"
+      </Button>
+      <Button
         onClick={() => {
           if (router.forward) {
             router.forward();
@@ -30,7 +28,7 @@ const Header: React.FC = () => {
         }}
       >
         Go Forward
-      </button>
+      </Button>
     </div>
   );
 };

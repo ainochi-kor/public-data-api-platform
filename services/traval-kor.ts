@@ -1,4 +1,9 @@
-import { GetlocationBasedListDataResponse, GetlocationBasedListParam } from "@/types/traval.type";
+import {
+  GetKeywardSearchDataResponse,
+  GetlocationBasedListDataResponse,
+  GetlocationBasedListParam,
+  KeywardSearchParam,
+} from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
 
@@ -24,6 +29,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/locationBasedList1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getKeywordSearch(params: KeywardSearchParam): Promise<{
+    response: GetKeywardSearchDataResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/searchKeyword1", { params })
         .then((res) => {
           resolve(res.data);
         })
