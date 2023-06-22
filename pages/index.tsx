@@ -68,7 +68,7 @@ export default function Home() {
   }
 
   return (
-    <div className="z-10 w-full max-w-5xl ">
+    <div className="w-full max-w-5xl ">
       <h1 className="text-3xl">위치기반 관광정보조회</h1>
       <button
         onClick={() => {
