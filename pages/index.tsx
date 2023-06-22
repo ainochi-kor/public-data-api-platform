@@ -2,7 +2,7 @@ import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { GetlocationBasedListParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useState } from "react";
 
 export default function Home() {
   const oddsServices = new TravalServices(axiosServer);
@@ -31,14 +31,11 @@ export default function Home() {
     };
   }, [coordinates]);
 
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getlocationBasedListData"],
     queryFn: () => oddsServices.getlocationBasedList(param),
+    enabled: false, // 자동 실행 Off, refetch를 통한 수동 실행.
   });
-
-  useEffect(() => {
-    console.log(data?.response?.body.items);
-  }, [data]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,6 +54,12 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    if (coordinates.x && coordinates.y) {
+      refetch();
+    }
+  }, [coordinates]);
+
   if (isLoading) {
     <div>isLoading</div>;
   }
@@ -67,6 +70,13 @@ export default function Home() {
   return (
     <div className="z-10 w-full max-w-5xl ">
       <h1 className="text-3xl">위치기반 관광정보조회</h1>
+      <button
+        onClick={() => {
+          refetch();
+        }}
+      >
+        다시 불러오기
+      </button>
       <div className="items-center justify-between font-mono text-sm lg:flex">
         {data?.response?.body.items.item.map((data) => {
           return (
