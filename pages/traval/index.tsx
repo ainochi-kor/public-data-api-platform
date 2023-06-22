@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const TravelHome: NextPage = () => {
   const router = useRouter();
   return (
-    <div className="flex flex-col space-y-2">
+    <div className="flex flex-col space-y-2 py-4">
       <Button onClick={() => router.push("/traval/location")}>
         위치기반 관광정보조회
       </Button>

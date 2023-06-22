@@ -6,10 +6,12 @@ const inter = Inter({ subsets: ["latin"] });
 const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <main
-      className={`flex min-h-screen flex-col items-center   ${inter.className}`}
+      className={`flex min-h-screen max-w-screen flex-col items-center   ${inter.className}`}
     >
       <Header />
-      <div className="flex justify-center p-24 w-full h-full">{children}</div>
+      <div className="flex justify-center items-center w-full h-full">
+        {children}
+      </div>
     </main>
   );
 };
