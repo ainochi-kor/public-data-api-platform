@@ -12,6 +12,9 @@ const TravelHome: NextPage = () => {
       <Button onClick={() => router.push("/traval/keywordSearch")}>
         키워드 검색 조회
       </Button>
+      <Button onClick={() => router.push("/traval/event-information")}>
+        행사 정보 조회
+      </Button>
     </div>
   );
 };

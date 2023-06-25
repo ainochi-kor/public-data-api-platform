@@ -92,3 +92,23 @@ export interface GetKeywardSearchBody extends ListDataBody {
 export interface GetKeywardSearchDataItems {
   item: GetListDataItem[];
 }
+
+//* 행사정보조회
+export interface EventInformationParam extends CommonParam {
+  listYN?: ListYN;
+  arrange?: Arrange;
+  eventStartDate: string;
+}
+
+export interface GetEventInformationDataResponse {
+  header: ResponseHeader;
+  body: GetEventInformationBody;
+}
+
+export interface GetEventInformationBody extends ListDataBody {
+  items: GetEventInformationItems;
+}
+
+export interface GetEventInformationItems {
+  item: GetListDataItem[];
+}
