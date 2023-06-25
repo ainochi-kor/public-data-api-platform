@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { KeywardSearchParam } from "@/types/traval.type";
+import { GetKeywardSearchParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -14,7 +14,7 @@ const KeywordSearch: NextPage = () => {
     setKeyword(e.currentTarget.value);
   };
 
-  const param: KeywardSearchParam = useMemo(() => {
+  const param: GetKeywardSearchParam = useMemo(() => {
     return {
       numOfRows: 10,
       pageNo: 1,

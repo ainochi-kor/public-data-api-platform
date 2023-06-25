@@ -1,32 +1,34 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetEventInformationParam } from "@/types/traval.type";
+import {
+  GetEventInformationParam,
+  GetSearchAccommodationParam,
+} from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
 
-const EventInformation: NextPage = () => {
+const SearchAccommodation: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
-  const param: GetEventInformationParam = useMemo(() => {
+  const param: GetSearchAccommodationParam = useMemo(() => {
     return {
       numOfRows: 10,
       pageNo: 1,
-      _type: "json",
       MobileOS: "ETC",
       MobileApp: "AppTest",
+      _type: "json",
       listYN: "Y",
       arrange: "A",
-      eventStartDate: dayjs().format("YYYYMMDD"),
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
     };
   }, []);
 
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["getKeywordSearch"],
-    queryFn: () => oddsServices.getEventInformation(param),
+    queryFn: () => oddsServices.searchStay(param),
     enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
   });
 
@@ -40,7 +42,7 @@ const EventInformation: NextPage = () => {
   return (
     <div className="py-4">
       <header className="px-8 pb-4">
-        <h1 className="text-3xl">(오늘 기준) 행사 정보 조회</h1>
+        <h1 className="text-3xl">숙박 정보 조회</h1>
         <div className="flex items-center space-x-2 py-4 ">
           <Button
             onClick={() => {
@@ -77,4 +79,4 @@ const EventInformation: NextPage = () => {
   );
 };
 
-export default EventInformation;
+export default SearchAccommodation;
