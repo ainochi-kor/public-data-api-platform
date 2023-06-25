@@ -1,4 +1,6 @@
 import {
+  EventInformationParam,
+  GetEventInformationDataResponse,
   GetKeywardSearchDataResponse,
   GetlocationBasedListDataResponse,
   GetlocationBasedListParam,
@@ -44,6 +46,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/searchKeyword1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getEventInformation(params: EventInformationParam): Promise<{
+    response: GetEventInformationDataResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/searchFestival1", { params })
         .then((res) => {
           resolve(res.data);
         })
