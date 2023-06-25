@@ -1,10 +1,12 @@
 import {
-  EventInformationParam,
+  GetEventInformationParam,
   GetEventInformationDataResponse,
   GetKeywardSearchDataResponse,
   GetlocationBasedListDataResponse,
   GetlocationBasedListParam,
-  KeywardSearchParam,
+  GetKeywardSearchParam,
+  GetSearchAccommodationParam,
+  GetSearchAccommodationResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -40,7 +42,7 @@ export default class TravalServices {
     });
   }
 
-  getKeywordSearch(params: KeywardSearchParam): Promise<{
+  getKeywordSearch(params: GetKeywardSearchParam): Promise<{
     response: GetKeywardSearchDataResponse;
   }> {
     return new Promise(async (resolve, reject) => {
@@ -55,12 +57,27 @@ export default class TravalServices {
     });
   }
 
-  getEventInformation(params: EventInformationParam): Promise<{
+  getEventInformation(params: GetEventInformationParam): Promise<{
     response: GetEventInformationDataResponse;
   }> {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/searchFestival1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  searchStay(params: GetSearchAccommodationParam): Promise<{
+    response: GetSearchAccommodationResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/searchStay1", { params })
         .then((res) => {
           resolve(res.data);
         })

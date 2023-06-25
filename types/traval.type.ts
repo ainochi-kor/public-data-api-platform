@@ -73,11 +73,16 @@ export interface GetlocationBasedListDataItems {
 
 //* 키워드 검색 조회
 
-export interface KeywardSearchParam extends CommonParam {
+export interface GetKeywardSearchParam extends CommonParam {
   listYN?: ListYN;
   arrange?: Arrange;
   keyword: string;
   contentTypeId?: ContentTypeId;
+  areaCode?: string;
+  sigunguCode?: string;
+  cat1?: string;
+  cat2?: string;
+  cat3?: string;
 }
 
 export interface GetKeywardSearchDataResponse {
@@ -94,10 +99,14 @@ export interface GetKeywardSearchDataItems {
 }
 
 //* 행사정보조회
-export interface EventInformationParam extends CommonParam {
+export interface GetEventInformationParam extends CommonParam {
   listYN?: ListYN;
   arrange?: Arrange;
   eventStartDate: string;
+  eventEndDate?: string;
+  areaCode?: string;
+  sigunguCode?: string;
+  modifiedtime?: string;
 }
 
 export interface GetEventInformationDataResponse {
@@ -111,4 +120,32 @@ export interface GetEventInformationBody extends ListDataBody {
 
 export interface GetEventInformationItems {
   item: GetListDataItem[];
+}
+
+//* 숙박 정보 조회
+export interface GetSearchAccommodationParam extends CommonParam {
+  listYN: ListYN;
+  arrange: Arrange;
+  areaCode?: string;
+  sigunguCode?: string;
+  modifiedtime?: string;
+}
+
+export interface GetSearchAccommodationResponse {
+  header: ResponseHeader;
+  body: GetSearchAccommodationBody;
+}
+
+export interface GetSearchAccommodationBody extends ListDataBody {
+  items: GetSearchAccommodationItems;
+}
+
+export interface GetSearchAccommodationItems {
+  item: GetSearchAccommodationItem[];
+}
+
+export interface GetSearchAccommodationItem extends GetListDataItem {
+  benikia: string;
+  goodstay: string;
+  hanok: string;
 }
