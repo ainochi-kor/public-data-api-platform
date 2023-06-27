@@ -9,17 +9,9 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
-import {
-  JSXElementConstructor,
-  PromiseLikeOfReactNode,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useEffect,
-  useMemo,
-} from "react";
+import { useEffect, useMemo } from "react";
 
-const DetailIntro: NextPage = () => {
+const DetailInfo: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
   const param: GetSearchDetailIntroParam = useMemo(() => {
@@ -36,8 +28,8 @@ const DetailIntro: NextPage = () => {
   }, []);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getSearchDetailIntro"],
-    queryFn: () => oddsServices.getSearchDetailIntro(param),
+    queryKey: ["getSearchDetailInfo"],
+    queryFn: () => oddsServices.getSearchDetailInfo(param),
     enabled: true,
   });
 
@@ -51,7 +43,7 @@ const DetailIntro: NextPage = () => {
   return (
     <div className="py-4">
       <header className="px-8 pb-4">
-        <h1 className="text-3xl">소개 정보 조회</h1>
+        <h1 className="text-3xl">반복 정보 조회</h1>
         <div className="flex items-center space-x-2 py-4 ">
           <Button
             onClick={() => {
@@ -61,12 +53,15 @@ const DetailIntro: NextPage = () => {
             검색하기
           </Button>
         </div>
-        <p>상세소개 쉬는날, 개장기간 등 내역을 조회하는 기능</p>
+        <p>
+          반복정보조회 추가 관광정보 상세내역을 조회한다. 상세반복정보를
+          안내URL의 국문관광정보 상세 매뉴얼 문서를 참고하시기 바랍니다.
+        </p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body.items.item.map((data, idx) => {
           return (
-            <div key={data.infocenter} className="border py-2">
+            <div key={`getSearchDetailInfo-${idx}`} className="border py-2">
               {Object.keys(data).map((key) => {
                 return (
                   <p key={key} className="">
@@ -82,4 +77,4 @@ const DetailIntro: NextPage = () => {
   );
 };
 
-export default DetailIntro;
+export default DetailInfo;

@@ -24,6 +24,9 @@ const TravelHome: NextPage = () => {
       <Button onClick={() => router.push("/traval/detail-intro")}>
         소개 정보 조회
       </Button>
+      <Button onClick={() => router.push("/traval/detail-info")}>
+        반복 정보 조회
+      </Button>
     </div>
   );
 };
