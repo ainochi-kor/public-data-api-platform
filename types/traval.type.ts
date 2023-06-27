@@ -352,3 +352,27 @@ export interface GetAreaBasedSyncListItem {
   zipcode: string;
   showflag: string;
 }
+
+//* 지역 코드 조회
+export interface GetAreaCodeParam extends CommonParam {
+  areaCode?: string;
+}
+
+export interface GetAreaCodeResponse {
+  header: ResponseHeader;
+  body: GetAreaCodeBody;
+}
+
+export interface GetAreaCodeBody extends ListDataBody {
+  items: GetAreaCodeItems;
+}
+
+export interface GetAreaCodeItems {
+  item: GetAreaCodeItem[];
+}
+
+export interface GetAreaCodeItem {
+  rnum: number;
+  code: string;
+  name: string;
+}

@@ -1,9 +1,11 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import {
-  GetAreaBasedSyncListParam,
+  GetAreaCodeParam,
   GetEventInformationParam,
   GetSearchDetailCommonParam,
+  GetSearchDetailImageParam,
+  GetSearchDetailIntroParam,
 } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -11,34 +13,25 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useMemo } from "react";
 
-const DetailCommon: NextPage = () => {
+const DetailInfo: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
-  const param: GetAreaBasedSyncListParam = useMemo(() => {
+  const param: GetAreaCodeParam = useMemo(() => {
     return {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
       MobileOS: "ETC",
       MobileApp: "AppTest",
-      showflag: "1",
-      modifiedtime: "",
-      listYN: "Y",
-      arrange: "A",
-      contentTypeId: "12",
       areaCode: "",
-      sigunguCode: "",
-      cat1: "",
-      cat2: "",
-      cat3: "",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
     };
   }, []);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getAreaBasedSyncList"],
-    queryFn: () => oddsServices.getAreaBasedSyncList(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
+    queryKey: ["getAreaCode"],
+    queryFn: () => oddsServices.getAreaCode(param),
+    enabled: true,
   });
 
   if (isLoading) {
@@ -51,7 +44,7 @@ const DetailCommon: NextPage = () => {
   return (
     <div className="py-4">
       <header className="px-8 pb-4">
-        <h1 className="text-3xl">관광정보 동기화 목록 조회</h1>
+        <h1 className="text-3xl">지역 코드 조회</h1>
         <div className="flex items-center space-x-2 py-4 ">
           <Button
             onClick={() => {
@@ -61,30 +54,15 @@ const DetailCommon: NextPage = () => {
             검색하기
           </Button>
         </div>
-        <p>
-          지역기반 관광정보파라미터 타입에 따라서 제목순,수정일순,등록일순
-          정렬검색목록을 조회하는 기능
-        </p>
+        <p>지역코드목록을 지역,시군구,읍면동 코드목록을 조회하는 기능</p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body.items.item.map((data, idx) => {
           return (
-            <div key={data.title} className="border py-2">
-              <Image
-                src={data.firstimage}
-                width={300}
-                height={300}
-                alt={data.title}
-              />
-              <Image
-                src={data.firstimage2}
-                width={300}
-                height={300}
-                alt={data.title}
-              />
+            <div key={`getSearchDetailInfo-${idx}`} className="border py-2">
               {Object.keys(data).map((key) => {
                 return (
-                  <p key={key} className="truncate ">
+                  <p key={key} className="truncate">
                     {key}: {data[key as keyof typeof data]}
                   </p>
                 );
@@ -97,4 +75,4 @@ const DetailCommon: NextPage = () => {
   );
 };
 
-export default DetailCommon;
+export default DetailInfo;
