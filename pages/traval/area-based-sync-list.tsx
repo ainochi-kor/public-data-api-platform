@@ -6,7 +6,7 @@ import { NextPage } from "next";
 import Image from "next/image";
 import { useMemo } from "react";
 
-const DetailCommon: NextPage = () => {
+const AreaBasedSyncList: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
   const param: GetAreaBasedSyncListParam = useMemo(() => {
@@ -92,4 +92,4 @@ const DetailCommon: NextPage = () => {
   );
 };
 
-export default DetailCommon;
+export default AreaBasedSyncList;

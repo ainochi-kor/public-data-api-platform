@@ -435,3 +435,53 @@ export interface GetCategoryCodeItem {
   code: string;
   name: string;
 }
+
+//* 지역기반 관광정보 조회
+export interface GetAreaBasedListParam extends CommonParam {
+  listYN?: ListYN;
+  arrange?: Arrange;
+  contentTypeId?: ContentTypeId;
+  areaCode?: string;
+  sigunguCode?: string;
+  cat1?: string;
+  cat2?: string;
+  cat3?: string;
+  modifiedtime?: string;
+}
+
+export interface GetAreaBasedListResponse {
+  header: ResponseHeader;
+  body: GetAreaBasedListBody;
+}
+
+export interface GetAreaBasedListBody extends ListDataBody {
+  items: GetAreaBasedListItems;
+}
+
+export interface GetAreaBasedListItems {
+  item: GetAreaBasedListItem[];
+}
+
+export interface GetAreaBasedListItem {
+  addr1: string;
+  addr2: string;
+  areacode: string;
+  booktour: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+  contentid: string;
+  contenttypeid: string;
+  createdtime: string;
+  firstimage: string;
+  firstimage2: string;
+  cpyrhtDivCd: string;
+  mapx: string;
+  mapy: string;
+  mlevel: string;
+  modifiedtime: string;
+  sigungucode: string;
+  tel: string;
+  title: string;
+  zipcode: string;
+}

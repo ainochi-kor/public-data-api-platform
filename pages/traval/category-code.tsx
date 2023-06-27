@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { useMemo } from "react";
 
-const DetailInfo: NextPage = () => {
+const CategoryCode: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
   const param: GetCategoryCodeParam = useMemo(() => {
@@ -69,4 +69,4 @@ const DetailInfo: NextPage = () => {
   );
 };
 
-export default DetailInfo;
+export default CategoryCode;
