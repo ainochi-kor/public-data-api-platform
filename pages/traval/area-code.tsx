@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { useMemo } from "react";
 
-const DetailInfo: NextPage = () => {
+const AreaCode: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
 
   const param: GetAreaCodeParam = useMemo(() => {
@@ -67,4 +67,4 @@ const DetailInfo: NextPage = () => {
   );
 };
 
-export default DetailInfo;
+export default AreaCode;

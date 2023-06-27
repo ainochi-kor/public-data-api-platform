@@ -10,7 +10,7 @@ const pathList = [
   },
   {
     label: "키워드 검색 조회",
-    path: `${travalPath}/keywordSearch`,
+    path: `${travalPath}/keyword-search`,
   },
   {
     label: "행사 정보 조회",
@@ -51,6 +51,10 @@ const pathList = [
   {
     label: "서비스 분류 코드 조회",
     path: `${travalPath}/category-code`,
+  },
+  {
+    label: "지역기반 관광정보 조회",
+    path: `${travalPath}/area-based-list`,
   },
 ];
 

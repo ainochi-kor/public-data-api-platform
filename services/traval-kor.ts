@@ -23,6 +23,8 @@ import {
   GetDetailPetTourResponse,
   GetCategoryCodeParam,
   GetCategoryCodeResponse,
+  GetAreaBasedListParam,
+  GetAreaBasedListResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -214,6 +216,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/categoryCode1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getAreaBasedListCode(params: GetAreaBasedListParam): Promise<{
+    response: GetAreaBasedListResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/areaBasedList1", { params })
         .then((res) => {
           resolve(res.data);
         })
