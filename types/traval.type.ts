@@ -203,3 +203,28 @@ export interface GetSearchAccommodationItem {
   mlevel: string;
   overview: string;
 }
+
+//* 공통 정보 조회
+
+export interface GetSearchDetailIntroParam extends CommonParam {
+  contentId: string;
+  contentTypeId: ContentTypeId;
+}
+
+export interface GetSearchDetailIntroResponse {
+  header: ResponseHeader;
+  body: GetSearchDetailIntroBody;
+}
+
+export interface GetSearchDetailIntroBody extends ListDataBody {
+  items: GetSearchDetailIntroItems;
+}
+
+export interface GetSearchDetailIntroItems {
+  item: GetSearchAccommodationItem[];
+}
+
+export interface GetSearchAccommodationItem {
+  contentid: string;
+  contenttypeid: ContentTypeId;
+}
