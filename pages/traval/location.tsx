@@ -73,6 +73,10 @@ const LocationBase: NextPage = () => {
     <div className="py-4">
       <header className="px-8 pb-4 space-y-4">
         <h1 className="text-3xl">위치기반 관광정보조회 </h1>
+        <p>
+          위치기반 관광정보파라미터 타입에 따라서 제목순,수정일순,등록일순
+          정렬검색목록을 조회하는 기능
+        </p>
         <Button
           onClick={() => {
             refetch();

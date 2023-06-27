@@ -48,8 +48,8 @@ const DetailInfo: NextPage = () => {
           </Button>
         </div>
         <p>
-          반복정보조회 추가 관광정보 상세내역을 조회한다. 상세반복정보를
-          안내URL의 국문관광정보 상세 매뉴얼 문서를 참고하시기 바랍니다.
+          추가 관광정보 상세내역을 조회한다. 상세반복정보를 안내URL의
+          국문관광정보 상세 매뉴얼 문서를 참고하시기 바랍니다.
         </p>
       </header>
       <div className="font-mono text-sm w-screen px-8">

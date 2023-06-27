@@ -46,6 +46,7 @@ const KeywordSearch: NextPage = () => {
     <div className="py-4">
       <header className="px-8 pb-4">
         <h1 className="text-3xl">키워드 검색 조회</h1>
+        <p>키워드로 검색을하며 전체별 타입정보별 목록을 조회한다</p>
         <div className="flex items-center space-x-2 py-4 ">
           <input
             className="px-2 h-10 bg-gray-100 rounded-lg"

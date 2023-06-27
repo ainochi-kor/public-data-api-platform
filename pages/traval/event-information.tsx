@@ -41,6 +41,7 @@ const EventInformation: NextPage = () => {
     <div className="py-4">
       <header className="px-8 pb-4">
         <h1 className="text-3xl">(오늘 기준) 행사 정보 조회</h1>
+        <p>행사정보목록을 조회한다. 컨텐츠 타입이 ‘행사’일 경우에만 유효하다</p>
         <div className="flex items-center space-x-2 py-4 ">
           <Button
             onClick={() => {
