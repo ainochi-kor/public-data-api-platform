@@ -13,6 +13,8 @@ import {
   GetSearchDetailInfoParam,
   GetSearchDetailInfoResponse,
   GetSearchDetailIntroResponse,
+  GetSearchDetailImageParam,
+  GetSearchDetailImageResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -129,6 +131,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/detailInfo1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getSearchDetailImage(params: GetSearchDetailImageParam): Promise<{
+    response: GetSearchDetailImageResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/detailImage1", { params })
         .then((res) => {
           resolve(res.data);
         })

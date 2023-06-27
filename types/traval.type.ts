@@ -271,3 +271,32 @@ export interface GetSearchDetailInfoItem {
   infotext: string;
   fldgubun: string;
 }
+
+//* 이미지 정보 조회
+export interface GetSearchDetailImageParam extends CommonParam {
+  contentId: string;
+  imageYN: ListYN;
+  subImageYN: ListYN;
+}
+
+export interface GetSearchDetailImageResponse {
+  header: ResponseHeader;
+  body: GetSearchDetailImageBody;
+}
+
+export interface GetSearchDetailImageBody extends ListDataBody {
+  items: GetSearchDetailImageItems;
+}
+
+export interface GetSearchDetailImageItems {
+  item: GetSearchDetailImageItem[];
+}
+
+export interface GetSearchDetailImageItem {
+  contentid: string;
+  originimgurl: string;
+  imgname: string;
+  smallimageurl: string;
+  cpyrhtDivCd: string;
+  serialnum: string;
+}
