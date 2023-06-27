@@ -2,6 +2,8 @@ import Button from "@/components/Button";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
+//Todo: 나중에 label, path 로된 객체 배열로 묶어서 관리하면 이쁠 것 같아요.
+
 const TravelHome: NextPage = () => {
   const router = useRouter();
   return (
@@ -32,6 +34,9 @@ const TravelHome: NextPage = () => {
       </Button>
       <Button onClick={() => router.push("/traval/area-based-sync-list")}>
         관광정보 동기화 목록 조회
+      </Button>
+      <Button onClick={() => router.push("/traval/area-code")}>
+        지역 코드 조회
       </Button>
     </div>
   );

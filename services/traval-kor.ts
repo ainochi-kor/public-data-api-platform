@@ -17,6 +17,8 @@ import {
   GetSearchDetailImageResponse,
   GetAreaBasedSyncListParam,
   GetAreaBasedSyncListResponse,
+  GetAreaCodeParam,
+  GetAreaCodeResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -163,6 +165,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/areaBasedSyncList1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getAreaCode(params: GetAreaCodeParam): Promise<{
+    response: GetAreaCodeResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/areaCode1", { params })
         .then((res) => {
           resolve(res.data);
         })
