@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetAreaCodeParam, GetCategoryCodeParam } from "@/types/traval.type";
+import { GetCategoryCodeParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { useMemo } from "react";
