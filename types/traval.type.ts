@@ -149,3 +149,57 @@ export interface GetSearchAccommodationItem extends GetListDataItem {
   goodstay: string;
   hanok: string;
 }
+
+//* 공통정보조회
+
+export interface GetSearchDetailCommonParam extends CommonParam {
+  contentId: string;
+  contentTypeId?: ContentTypeId;
+  defaultYN?: string;
+  firstImageYN?: ListYN;
+  areacodeYN?: ListYN;
+  catcodeYN?: ListYN;
+  addrinfoYN?: ListYN;
+  mapinfoYN?: ListYN;
+  overviewYN?: ListYN;
+}
+
+export interface GetSearchDetailCommonResponse {
+  header: ResponseHeader;
+  body: GetSearchDetailCommonBody;
+}
+
+export interface GetSearchDetailCommonBody extends ListDataBody {
+  items: GetSearchDetailCommonItems;
+}
+
+export interface GetSearchDetailCommonItems {
+  item: GetSearchAccommodationItem[];
+}
+
+export interface GetSearchAccommodationItem {
+  contentid: string;
+  contenttypeid: ContentTypeId;
+  title: string;
+  createdtime: string;
+  modifiedtime: string;
+  tel: string;
+  telname: string;
+  homepage: string;
+  booktour: string;
+  firstimage: string;
+  firstimage2: string;
+  cpyrhtDivCd: string;
+  areacode: string;
+  sigungucode: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+  addr1: string;
+  addr2: string;
+  zipcode: string;
+  mapx: string;
+  mapy: string;
+  mlevel: string;
+  overview: string;
+}
