@@ -1,15 +1,10 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import {
-  GetAreaBasedSyncListParam,
-  GetEventInformationParam,
-  GetSearchDetailCommonParam,
-} from "@/types/traval.type";
+import { GetAreaBasedSyncListParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 const DetailCommon: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);

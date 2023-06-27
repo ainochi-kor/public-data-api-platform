@@ -408,3 +408,30 @@ export interface GetDetailPetTourItem {
   relaRntlPrdlst: string;
   acmpyNeedMtr: string;
 }
+
+//* 서비스 분류 코드 조회
+export interface GetCategoryCodeParam extends CommonParam {
+  contentTypeId?: ContentTypeId;
+  cat1?: string;
+  cat2?: string;
+  cat3?: string;
+}
+
+export interface GetCategoryCodeResponse {
+  header: ResponseHeader;
+  body: GetCategoryCodeBody;
+}
+
+export interface GetCategoryCodeBody extends ListDataBody {
+  items: GetCategoryCodeItems;
+}
+
+export interface GetCategoryCodeItems {
+  item: GetCategoryCodeItem[];
+}
+
+export interface GetCategoryCodeItem {
+  rnum: number;
+  code: string;
+  name: string;
+}
