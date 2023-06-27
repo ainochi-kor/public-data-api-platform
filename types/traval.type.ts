@@ -376,3 +376,35 @@ export interface GetAreaCodeItem {
   code: string;
   name: string;
 }
+
+//* 반려동물 동반 여행 조회
+export interface GetDetailPetTourParam extends CommonParam {
+  contentId?: string;
+}
+
+export interface GetDetailPetTourResponse {
+  header: ResponseHeader;
+  body: GetDetailPetTourBody;
+}
+
+export interface GetDetailPetTourBody extends ListDataBody {
+  items: GetDetailPetTourItems;
+}
+
+export interface GetDetailPetTourItems {
+  item: GetDetailPetTourItem[];
+}
+
+export interface GetDetailPetTourItem {
+  contentid: string;
+  petTursmInfo: string;
+  relaAcdntRiskMtr: string;
+  acmpyTypeCd: string;
+  relaPosesFclty: string;
+  relaFrnshPrdlst: string;
+  etcAcmpyInfo: string;
+  relaPurcPrdlst: string;
+  acmpyPsblCpam: string;
+  relaRntlPrdlst: string;
+  acmpyNeedMtr: string;
+}
