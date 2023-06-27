@@ -10,6 +10,9 @@ import {
   GetSearchDetailCommonParam,
   GetSearchDetailCommonResponse,
   GetSearchDetailIntroParam,
+  GetSearchDetailInfoParam,
+  GetSearchDetailInfoResponse,
+  GetSearchDetailIntroResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -106,11 +109,26 @@ export default class TravalServices {
   }
 
   getSearchDetailIntro(params: GetSearchDetailIntroParam): Promise<{
-    response: GetSearchDetailCommonResponse;
+    response: GetSearchDetailIntroResponse;
   }> {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/detailIntro1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getSearchDetailInfo(params: GetSearchDetailInfoParam): Promise<{
+    response: GetSearchDetailInfoResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/detailInfo1", { params })
         .then((res) => {
           resolve(res.data);
         })

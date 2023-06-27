@@ -221,10 +221,53 @@ export interface GetSearchDetailIntroBody extends ListDataBody {
 }
 
 export interface GetSearchDetailIntroItems {
-  item: GetSearchAccommodationItem[];
+  item: GetSearchDetailIntroItem[];
 }
 
-export interface GetSearchAccommodationItem {
+export interface GetSearchDetailIntroItem {
   contentid: string;
-  contenttypeid: ContentTypeId;
+  contenttypeid: string;
+  heritage1: string;
+  heritage2: string;
+  heritage3: string;
+  infocenter: string;
+  opendate: string;
+  restdate: string;
+  expguide: string;
+  expagerange: string;
+  accomcount: string;
+  useseason: string;
+  usetime: string;
+  parking: string;
+  chkbabycarriage: string;
+  chkpet: string;
+  chkcreditcard: string;
+}
+
+//* 반복 정보 조회
+export interface GetSearchDetailInfoParam extends CommonParam {
+  contentId: string;
+  contentTypeId: ContentTypeId;
+}
+
+export interface GetSearchDetailInfoResponse {
+  header: ResponseHeader;
+  body: GetSearchDetailInfoBody;
+}
+
+export interface GetSearchDetailInfoBody extends ListDataBody {
+  items: GetSearchDetailInfoItems;
+}
+
+export interface GetSearchDetailInfoItems {
+  item: GetSearchDetailInfoItem[];
+}
+
+export interface GetSearchDetailInfoItem {
+  contentid: string;
+  contenttypeid: string;
+  serialnum: string;
+  infoname: string;
+  infotext: string;
+  fldgubun: string;
 }
