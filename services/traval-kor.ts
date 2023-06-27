@@ -15,6 +15,8 @@ import {
   GetSearchDetailIntroResponse,
   GetSearchDetailImageParam,
   GetSearchDetailImageResponse,
+  GetAreaBasedSyncListParam,
+  GetAreaBasedSyncListResponse,
 } from "@/types/traval.type";
 import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
@@ -146,6 +148,21 @@ export default class TravalServices {
     return new Promise(async (resolve, reject) => {
       this.axios
         .get("/detailImage1", { params })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
+    });
+  }
+
+  getAreaBasedSyncList(params: GetAreaBasedSyncListParam): Promise<{
+    response: GetAreaBasedSyncListResponse;
+  }> {
+    return new Promise(async (resolve, reject) => {
+      this.axios
+        .get("/areaBasedSyncList1", { params })
         .then((res) => {
           resolve(res.data);
         })

@@ -300,3 +300,55 @@ export interface GetSearchDetailImageItem {
   cpyrhtDivCd: string;
   serialnum: string;
 }
+
+//* 관광정보 동기화 목록 조회
+export interface GetAreaBasedSyncListParam extends CommonParam {
+  showflag: "1" | "0"; // 컨텐츠표출여부(1=표출, 0=비표출)
+  modifiedtime: string;
+  listYN: ListYN;
+  arrange: Arrange;
+  contentTypeId: ContentTypeId;
+  areaCode: string;
+  sigunguCode: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+}
+
+export interface GetAreaBasedSyncListResponse {
+  header: ResponseHeader;
+  body: GetAreaBasedSyncListBody;
+}
+
+export interface GetAreaBasedSyncListBody extends ListDataBody {
+  items: GetAreaBasedSyncListItems;
+}
+
+export interface GetAreaBasedSyncListItems {
+  item: GetAreaBasedSyncListItem[];
+}
+
+export interface GetAreaBasedSyncListItem {
+  addr1: string;
+  addr2: string;
+  areacode: string;
+  booktour: string;
+  cat1: string;
+  cat2: string;
+  cat3: string;
+  contentid: string;
+  contenttypeid: string;
+  createdtime: string;
+  firstimage: string;
+  firstimage2: string;
+  cpyrhtDivCd: string;
+  mapx: string;
+  mapy: string;
+  mlevel: string;
+  modifiedtime: string;
+  sigungucode: string;
+  tel: string;
+  title: string;
+  zipcode: string;
+  showflag: string;
+}

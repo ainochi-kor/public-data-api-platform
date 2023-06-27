@@ -30,6 +30,9 @@ const TravelHome: NextPage = () => {
       <Button onClick={() => router.push("/traval/detail-image")}>
         이미지 정보 조회
       </Button>
+      <Button onClick={() => router.push("/traval/area-based-sync-list")}>
+        관광정보 동기화 목록 조회
+      </Button>
     </div>
   );
 };
