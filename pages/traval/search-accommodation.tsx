@@ -1,9 +1,6 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import {
-  GetEventInformationParam,
-  GetSearchAccommodationParam,
-} from "@/types/traval.type";
+import { GetSearchAccommodationParam } from "@/types/traval.type";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NextPage } from "next";

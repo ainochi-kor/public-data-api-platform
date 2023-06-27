@@ -2,7 +2,6 @@ import Button from "@/components/Button";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-//Todo: 나중에 label, path 로된 객체 배열로 묶어서 관리하면 이쁠 것 같아요.
 const travalPath = "/traval";
 const pathList = [
   {
@@ -48,6 +47,10 @@ const pathList = [
   {
     label: "반려동물 동반 여행 정보",
     path: `${travalPath}/detail-pet-tour`,
+  },
+  {
+    label: "서비스 분류 코드 조회",
+    path: `${travalPath}/category-code`,
   },
 ];
 
