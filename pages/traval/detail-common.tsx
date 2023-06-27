@@ -34,7 +34,7 @@ const DetailCommon: NextPage = () => {
   }, []);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getKeywordSearch"],
+    queryKey: ["getSearchDetailCommon"],
     queryFn: () => oddsServices.getSearchDetailCommon(param),
     enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
   });

@@ -27,7 +27,7 @@ const SearchAccommodation: NextPage = () => {
   }, []);
 
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getKeywordSearch"],
+    queryKey: ["searchStay"],
     queryFn: () => oddsServices.searchStay(param),
     enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
   });
