@@ -1,8 +1,7 @@
 import { AREA_CODE } from "@/constants/common";
-import { AreaCode } from "@/types/traval.type";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 
-const AreaCodeSelect: React.FC<{
+const SelectAreaCode: React.FC<{
   register: UseFormRegister<any>;
 }> = ({ register }) => (
   <select
@@ -17,4 +16,4 @@ const AreaCodeSelect: React.FC<{
   </select>
 );
 
-export default AreaCodeSelect;
+export default SelectAreaCode;

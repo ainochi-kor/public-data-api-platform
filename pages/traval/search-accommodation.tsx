@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import AreaCodeSelect from "@/components/Select/AreaCodeSelect";
+import SelectAreaCode from "@/components/Select/SelectAreaCode";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { AreaCode, GetSearchAccommodationParam } from "@/types/traval.type";
 import { useMutation } from "@tanstack/react-query";
@@ -47,13 +47,13 @@ const SearchAccommodation: NextPage = () => {
           숙박정보 검색목록을 조회한다. 컨텐츠 타입이 ‘숙박’일 경우에만
           유효하다.
         </p>
-        <AreaCodeSelect register={register} />
+        <SelectAreaCode register={register} />
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>
         </div>
       </form>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body?.items?.item?.map((data) => {
           return (
             <div key={data.title} className="border py-2">
               {data.title}

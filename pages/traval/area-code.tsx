@@ -49,7 +49,7 @@ const AreaCode: NextPage = () => {
         <p>지역코드목록을 지역,시군구,읍면동 코드목록을 조회하는 기능</p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data, idx) => {
+        {data?.response?.body?.items?.item?.map((data, idx) => {
           return (
             <div key={`getSearchDetailInfo-${idx}`} className="border py-2">
               {Object.keys(data).map((key) => {

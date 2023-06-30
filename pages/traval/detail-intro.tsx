@@ -50,7 +50,7 @@ const DetailIntro: NextPage = () => {
         <p>상세소개 쉬는날, 개장기간 등 내역을 조회하는 기능</p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body?.items?.item?.map((data) => {
           return (
             <div key={data.infocenter} className="border py-2">
               {Object.keys(data).map((key) => {
