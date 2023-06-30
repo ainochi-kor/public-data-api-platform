@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import AreaCodeSelect from "@/components/Select/AreaCodeSelect";
 import { AREA_CODE } from "@/constants/common";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { AreaCode, GetEventInformationParam } from "@/types/traval.type";
@@ -67,16 +68,7 @@ const EventInformation: NextPage = () => {
             placeholder="행사종료일(형식 :YYYYMMDD)"
             {...register("eventEndDate")}
           />
-          <select
-            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
-            {...register("areaCode")}
-          >
-            {AREA_CODE.map((data) => (
-              <option key={data.label} value={data.value}>
-                {data.label}
-              </option>
-            ))}
-          </select>
+          <AreaCodeSelect register={register} />
         </div>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>

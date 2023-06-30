@@ -1,17 +1,19 @@
 import Button from "@/components/Button";
+import AreaCodeSelect from "@/components/Select/AreaCodeSelect";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetSearchAccommodationParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
+import { AreaCode, GetSearchAccommodationParam } from "@/types/traval.type";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const SearchAccommodation: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<{ areaCode: AreaCode }>();
+  const onSubmit: SubmitHandler<{ areaCode: AreaCode }> = (data) => {
+    console.log(data);
 
-  const param: GetSearchAccommodationParam = useMemo(() => {
-    return {
+    const param: GetSearchAccommodationParam = {
       numOfRows: 10,
       pageNo: 1,
       MobileOS: "ETC",
@@ -20,14 +22,15 @@ const SearchAccommodation: NextPage = () => {
       listYN: "Y",
       arrange: "A",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["searchStay"],
-    queryFn: () => oddsServices.searchStay(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetSearchAccommodationParam) => oddsServices.searchStay(param)
+  );
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -38,22 +41,17 @@ const SearchAccommodation: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">숙박 정보 조회</h1>
         <p>
           숙박정보 검색목록을 조회한다. 컨텐츠 타입이 ‘숙박’일 경우에만
           유효하다.
         </p>
+        <AreaCodeSelect register={register} />
         <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
-            검색하기
-          </Button>
+          <Button type="submit">검색하기</Button>
         </div>
-      </header>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body.items.item.map((data) => {
           return (
