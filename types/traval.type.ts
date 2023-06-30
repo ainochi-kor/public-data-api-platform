@@ -10,6 +10,20 @@ interface CommonParam {
 type ListYN = "Y" | "N"; // 	목록구분(Y=목록, N=개수)
 type Arrange = "A" | "C" | "D" | "O" | "Q" | "R"; // 정렬구분 (A=제목순, C=수정일순, D=생성일순) 대표이미지가반드시있는정렬(O=제목순, Q=수정일순, R=생성일순)
 type ContentTypeId = "12" | "14" | "15" | "25" | "28" | "32" | "38" | "39"; // 관광타입(12:관광지, 14:문화시설, 15:축제공연행사, 25:여행코스, 28:레포츠, 32:숙박, 38:쇼핑, 39:음식점) ID
+// 1: 서울, 2: 인천, 3: 대전, 4: 대구,
+export type AreaCode =
+  | "1" // 서울
+  | "2" // 인천
+  | "3" // 대전
+  | "4" // 대구
+  | "5" // 광주
+  | "6" // 부산
+  | "7" // 울산
+  | "8" // 세종특별자치시
+  | "31" // 경기도
+  | "32"; // 강원특별자치도
+
+  // 1: 서울, 2: 인천
 
 export interface GetlocationBasedListParam extends CommonParam {
   listYN?: ListYN;
