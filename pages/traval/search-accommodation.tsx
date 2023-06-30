@@ -2,11 +2,9 @@ import Button from "@/components/Button";
 import AreaCodeSelect from "@/components/Select/AreaCodeSelect";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { AreaCode, GetSearchAccommodationParam } from "@/types/traval.type";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import dayjs from "dayjs";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const SearchAccommodation: NextPage = () => {
