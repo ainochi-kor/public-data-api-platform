@@ -1,17 +1,28 @@
 import Button from "@/components/Button";
+import Input from "@/components/Input";
+import { AREA_CODE } from "@/constants/common";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetEventInformationParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import { AreaCode, GetEventInformationParam } from "@/types/traval.type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface IFormInput {
+  eventStartDate: string;
+  eventEndDate: string;
+  areaCode: AreaCode;
+}
 
 const EventInformation: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<IFormInput>();
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(data);
 
-  const param: GetEventInformationParam = useMemo(() => {
-    return {
+    const param: GetEventInformationParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
@@ -19,16 +30,20 @@ const EventInformation: NextPage = () => {
       MobileApp: "AppTest",
       listYN: "Y",
       arrange: "A",
-      eventStartDate: dayjs().format("YYYYMMDD"),
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getEventInformation"],
-    queryFn: () => oddsServices.getEventInformation(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetEventInformationParam) => oddsServices.getEventInformation(param)
+  );
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -39,19 +54,36 @@ const EventInformation: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
-        <h1 className="text-3xl">(오늘 기준) 행사 정보 조회</h1>
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
+        <h1 className="text-3xl">행사 정보 조회</h1>
         <p>행사정보목록을 조회한다. 컨텐츠 타입이 ‘행사’일 경우에만 유효하다</p>
-        <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
+        <div className="space-y-1">
+          <input
+            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
+            placeholder="행사시작일(형식 :YYYYMMDD)"
+            defaultValue={"20230101"}
+            {...register("eventStartDate")}
+          />
+          <input
+            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
+            placeholder="행사종료일(형식 :YYYYMMDD)"
+            {...register("eventEndDate")}
+          />
+          <select
+            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
+            {...register("areaCode")}
           >
-            검색하기
-          </Button>
+            {AREA_CODE.map((data) => (
+              <option key={data.label} value={data.value}>
+                {data.label}
+              </option>
+            ))}
+          </select>
         </div>
-      </header>
+        <div className="flex items-center space-x-2 py-4 ">
+          <Button type="submit">검색하기</Button>
+        </div>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body.items.item.map((data) => {
           return (
