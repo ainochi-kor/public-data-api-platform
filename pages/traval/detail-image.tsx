@@ -55,7 +55,7 @@ const DetailImage: NextPage = () => {
         </p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data, idx) => {
+        {data?.response?.body?.items?.item?.map((data, idx) => {
           return (
             <div key={`getSearchDetailInfo-${idx}`} className="border py-2">
               <Image

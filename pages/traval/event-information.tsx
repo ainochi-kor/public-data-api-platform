@@ -1,6 +1,5 @@
 import Button from "@/components/Button";
-import AreaCodeSelect from "@/components/Select/AreaCodeSelect";
-import { AREA_CODE } from "@/constants/common";
+import SelectAreaCode from "@/components/Select/SelectAreaCode";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { AreaCode, GetEventInformationParam } from "@/types/traval.type";
 import { useMutation } from "@tanstack/react-query";
@@ -9,7 +8,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-interface IFormInput {
+interface EventRegister {
   eventStartDate: string;
   eventEndDate: string;
   areaCode: AreaCode;
@@ -17,8 +16,8 @@ interface IFormInput {
 
 const EventInformation: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
-  const { register, handleSubmit } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const { register, handleSubmit } = useForm<EventRegister>();
+  const onSubmit: SubmitHandler<EventRegister> = (data) => {
     console.log(data);
 
     const param: GetEventInformationParam = {
@@ -68,14 +67,14 @@ const EventInformation: NextPage = () => {
             placeholder="행사종료일(형식 :YYYYMMDD)"
             {...register("eventEndDate")}
           />
-          <AreaCodeSelect register={register} />
+          <SelectAreaCode register={register} />
         </div>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>
         </div>
       </form>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body?.items?.item?.map((data) => {
           return (
             <div key={data.title} className="border py-2">
               {data.title}

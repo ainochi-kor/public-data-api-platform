@@ -61,7 +61,7 @@ const AreaBasedList: NextPage = () => {
         </p>
       </header>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body?.items?.item?.map((data) => {
           return (
             <div key={data.title} className="border py-2">
               <Image

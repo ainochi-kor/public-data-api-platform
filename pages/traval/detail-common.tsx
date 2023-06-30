@@ -1,23 +1,40 @@
 import Button from "@/components/Button";
+import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetSearchDetailCommonParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import { ContentTypeId, GetSearchDetailCommonParam } from "@/types/traval.type";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface CommomFormRegister {
+  contentId: string;
+  contentTypeId: ContentTypeId;
+}
 
 const DetailCommon: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<CommomFormRegister>({
+    defaultValues: {
+      contentTypeId: "",
+      contentId: "126508",
+    },
+  });
 
-  const param: GetSearchDetailCommonParam = useMemo(() => {
-    return {
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetSearchDetailCommonParam) =>
+      oddsServices.getSearchDetailCommon(param)
+  );
+
+  const onSubmit: SubmitHandler<CommomFormRegister> = (data) => {
+    console.log(data);
+
+    const param: GetSearchDetailCommonParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
       MobileOS: "ETC",
       MobileApp: "AppTest",
-      contentId: "126508",
-      contentTypeId: "12",
       defaultYN: "Y",
       firstImageYN: "Y",
       areacodeYN: "Y",
@@ -26,14 +43,11 @@ const DetailCommon: NextPage = () => {
       mapinfoYN: "Y",
       overviewYN: "Y",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getSearchDetailCommon"],
-    queryFn: () => oddsServices.getSearchDetailCommon(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -44,25 +58,28 @@ const DetailCommon: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">공통 정보 조회</h1>
-        <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
-            검색하기
-          </Button>
-        </div>
         <p>
           타입별공통 정보기본정보, 약도이미지, 대표이미지, 분류정보, 지역정보,
           주소정보, 좌표정보, 개요정보, 길안내정보, 이미지정보,
           연계관광정보목록을 조회하는 기능
         </p>
-      </header>
+        <div className="space-y-1">
+          <SelectContentType register={register} />
+          <input
+            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
+            placeholder="콘텐츠 ID"
+            {...register("contentId")}
+            required
+          />
+        </div>
+        <div className="flex items-center space-x-2 py-4 ">
+          <Button type="submit">검색하기</Button>
+        </div>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
-        {data?.response?.body.items.item.map((data) => {
+        {data?.response?.body?.items?.item?.map((data) => {
           return (
             <div key={data.title} className="border py-2">
               {data.title}
