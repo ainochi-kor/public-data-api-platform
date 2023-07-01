@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
 import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { ContentTypeId, GetSearchDetailCommonParam } from "@/types/traval.type";
@@ -65,15 +66,16 @@ const DetailCommon: NextPage = () => {
           주소정보, 좌표정보, 개요정보, 길안내정보, 이미지정보,
           연계관광정보목록을 조회하는 기능
         </p>
-        <div className="space-y-1">
+        <InputLayout>
           <SelectContentType register={register} />
+          <label>콘텐츠 ID</label>
           <input
             className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
             placeholder="콘텐츠 ID"
             {...register("contentId")}
             required
           />
-        </div>
+        </InputLayout>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>
         </div>

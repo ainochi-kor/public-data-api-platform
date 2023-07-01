@@ -33,6 +33,8 @@ const AreaCode: NextPage = () => {
     <div>error</div>;
   }
 
+  console.log(data);
+
   return (
     <div className="py-4">
       <header className="px-8 pb-4">

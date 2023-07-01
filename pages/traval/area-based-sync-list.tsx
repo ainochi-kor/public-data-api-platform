@@ -1,16 +1,31 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
+import SelectAreaCode from "@/components/Select/SelectAreaCode";
+import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetAreaBasedSyncListParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import {
+  AreaParam,
+  ContentTypeId,
+  GetAreaBasedSyncListParam,
+} from "@/types/traval.type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface AreaBasedSyncListParam extends AreaParam {
+  contentTypeId: ContentTypeId;
+}
 
 const AreaBasedSyncList: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<AreaBasedSyncListParam>();
 
-  const param: GetAreaBasedSyncListParam = useMemo(() => {
-    return {
+  const onSubmit: SubmitHandler<AreaBasedSyncListParam> = (data) => {
+    console.log(data);
+
+    const param: GetAreaBasedSyncListParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
@@ -20,21 +35,20 @@ const AreaBasedSyncList: NextPage = () => {
       modifiedtime: "",
       listYN: "Y",
       arrange: "A",
-      contentTypeId: "12",
-      areaCode: "",
-      sigunguCode: "",
       cat1: "",
       cat2: "",
       cat3: "",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getAreaBasedSyncList"],
-    queryFn: () => oddsServices.getAreaBasedSyncList(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetAreaBasedSyncListParam) =>
+      oddsServices.getAreaBasedSyncList(param)
+  );
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -45,22 +59,20 @@ const AreaBasedSyncList: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">관광정보 동기화 목록 조회</h1>
-        <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
-            검색하기
-          </Button>
-        </div>
         <p>
           지역기반 관광정보파라미터 타입에 따라서 제목순,수정일순,등록일순
           정렬검색목록을 조회하는 기능
         </p>
-      </header>
+        <InputLayout>
+          <SelectContentType register={register} />
+          <SelectAreaCode register={register} />
+        </InputLayout>
+        <div className="flex items-center space-x-2 py-4 ">
+          <Button type="submit">검색하기</Button>
+        </div>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body?.items?.item?.map((data) => {
           return (

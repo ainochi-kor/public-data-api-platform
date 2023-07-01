@@ -1,17 +1,19 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
 import SelectAreaCode from "@/components/Select/SelectAreaCode";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { AreaCode, GetEventInformationParam } from "@/types/traval.type";
 import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface EventRegister {
   eventStartDate: string;
   eventEndDate: string;
   areaCode: AreaCode;
+  sigunguCode: string;
 }
 
 const EventInformation: NextPage = () => {
@@ -55,7 +57,7 @@ const EventInformation: NextPage = () => {
       <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">행사 정보 조회</h1>
         <p>행사정보목록을 조회한다. 컨텐츠 타입이 ‘행사’일 경우에만 유효하다</p>
-        <div className="space-y-1">
+        <InputLayout>
           <input
             className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
             placeholder="행사시작일(형식 :YYYYMMDD)"
@@ -68,7 +70,7 @@ const EventInformation: NextPage = () => {
             {...register("eventEndDate")}
           />
           <SelectAreaCode register={register} />
-        </div>
+        </InputLayout>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>
         </div>
