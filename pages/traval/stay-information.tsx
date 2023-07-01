@@ -1,16 +1,21 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
 import SelectAreaCode from "@/components/Select/SelectAreaCode";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { AreaCode, GetSearchAccommodationParam } from "@/types/traval.type";
+import {
+  AreaCode,
+  AreaParam,
+  GetSearchAccommodationParam,
+} from "@/types/traval.type";
 import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-const SearchAccommodation: NextPage = () => {
+const StayInformation: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
-  const { register, handleSubmit } = useForm<{ areaCode: AreaCode }>();
-  const onSubmit: SubmitHandler<{ areaCode: AreaCode }> = (data) => {
+  const { register, handleSubmit } = useForm<AreaParam>();
+  const onSubmit: SubmitHandler<AreaParam> = (data) => {
     console.log(data);
 
     const param: GetSearchAccommodationParam = {
@@ -47,7 +52,9 @@ const SearchAccommodation: NextPage = () => {
           숙박정보 검색목록을 조회한다. 컨텐츠 타입이 ‘숙박’일 경우에만
           유효하다.
         </p>
-        <SelectAreaCode register={register} />
+        <InputLayout>
+          <SelectAreaCode register={register} />
+        </InputLayout>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>
         </div>
@@ -78,4 +85,4 @@ const SearchAccommodation: NextPage = () => {
   );
 };
 
-export default SearchAccommodation;
+export default StayInformation;

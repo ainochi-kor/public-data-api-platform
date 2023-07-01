@@ -33,7 +33,10 @@ export type AreaCode =
   | "31" // 경기도
   | "32"; // 강원특별자치도
 
-// 1: 서울, 2: 인천
+export interface AreaParam {
+  areaCode?: AreaCode;
+  sigunguCode?: string;
+}
 
 export interface GetlocationBasedListParam extends CommonParam {
   listYN?: ListYN;
@@ -326,14 +329,12 @@ export interface GetSearchDetailImageItem {
 }
 
 //* 관광정보 동기화 목록 조회
-export interface GetAreaBasedSyncListParam extends CommonParam {
+export interface GetAreaBasedSyncListParam extends CommonParam, AreaParam {
   showflag: "1" | "0"; // 컨텐츠표출여부(1=표출, 0=비표출)
   modifiedtime: string;
   listYN: ListYN;
   arrange: Arrange;
   contentTypeId: ContentTypeId;
-  areaCode: string;
-  sigunguCode: string;
   cat1: string;
   cat2: string;
   cat3: string;

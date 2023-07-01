@@ -18,7 +18,7 @@ const pathList = [
   },
   {
     label: "숙박 정보 조회",
-    path: `${travalPath}/search-accommodation`,
+    path: `${travalPath}/stay-information`,
   },
   {
     label: "공통 정보 조회",
