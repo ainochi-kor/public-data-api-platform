@@ -6,7 +6,7 @@ import { AreaCode, GetEventInformationParam } from "@/types/traval.type";
 import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface EventRegister {

@@ -1,20 +1,21 @@
 import Button from "@/components/Button";
 import InputLayout from "@/components/Layout/InputLayout";
 import SelectAreaCode from "@/components/Select/SelectAreaCode";
+import SelectCategory from "@/components/Select/SelectCategory";
 import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import {
   AreaParam,
+  CategoryParam,
   ContentTypeId,
   GetAreaBasedSyncListParam,
 } from "@/types/traval.type";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-interface AreaBasedSyncListParam extends AreaParam {
+export interface AreaBasedSyncListParam extends AreaParam, CategoryParam {
   contentTypeId: ContentTypeId;
 }
 
@@ -35,9 +36,6 @@ const AreaBasedSyncList: NextPage = () => {
       modifiedtime: "",
       listYN: "Y",
       arrange: "A",
-      cat1: "",
-      cat2: "",
-      cat3: "",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
       ...data,
     };
@@ -68,6 +66,7 @@ const AreaBasedSyncList: NextPage = () => {
         <InputLayout>
           <SelectContentType register={register} />
           <SelectAreaCode register={register} />
+          <SelectCategory register={register} />
         </InputLayout>
         <div className="flex items-center space-x-2 py-4 ">
           <Button type="submit">검색하기</Button>

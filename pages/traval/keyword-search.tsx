@@ -1,21 +1,28 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
+import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetKeywardSearchParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import { ContentTypeId, GetKeywardSearchParam } from "@/types/traval.type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const KeywordSearch: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
-  const [keyword, setKeyword] = useState("");
+  const { register, handleSubmit } = useForm<{
+    keyword: string;
+    contentTypeId: ContentTypeId;
+  }>();
 
-  const handleChangeKeyword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.currentTarget.value);
-  };
+  const onSubmit: SubmitHandler<{
+    keyword: string;
+    contentTypeId: ContentTypeId;
+  }> = (data) => {
+    console.log(data);
 
-  const param: GetKeywardSearchParam = useMemo(() => {
-    return {
+    const param: GetKeywardSearchParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
@@ -23,17 +30,16 @@ const KeywordSearch: NextPage = () => {
       MobileApp: "AppTest",
       listYN: "Y",
       arrange: "A",
-      contentTypeId: "15",
-      keyword,
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, [keyword]);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getKeywordSearch"],
-    queryFn: () => oddsServices.getKeywordSearch(param),
-    enabled: false, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetKeywardSearchParam) => oddsServices.getKeywordSearch(param)
+  );
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -44,26 +50,24 @@ const KeywordSearch: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">키워드 검색 조회</h1>
         <p>키워드로 검색을하며 전체별 타입정보별 목록을 조회한다</p>
-        <div className="flex items-center space-x-2 py-4 ">
+        <InputLayout>
+          <SelectContentType register={register} useAll={true} />
+        </InputLayout>
+        <div className="flex w-full items-center space-x-2 py-4 ">
           <input
-            className="px-2 h-10 bg-gray-100 rounded-lg"
+            className="px-2 h-10 bg-gray-100 rounded-lg w-full"
             type="text"
             placeholder="강원"
-            value={keyword}
-            onChange={handleChangeKeyword}
+            {...register("keyword", { required: true })}
           />
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
+          <Button type="submit" className="whitespace-nowrap">
             검색하기
           </Button>
         </div>
-      </header>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body?.items?.item?.map((data) => {
           return (
