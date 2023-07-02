@@ -339,7 +339,7 @@ export interface GetAreaBasedSyncListParam
   extends CommonParam,
     AreaParam,
     CategoryParam {
-  showflag: "1" | "0"; // 컨텐츠표출여부(1=표출, 0=비표출)
+  showflag: "1" | "0"; // 콘텐츠표출여부(1=표출, 0=비표출)
   modifiedtime: string;
   listYN: ListYN;
   arrange: Arrange;

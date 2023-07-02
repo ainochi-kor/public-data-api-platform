@@ -6,7 +6,7 @@ const SelectContentType: React.FC<{
   useAll?: boolean;
 }> = ({ register, useAll = true }) => (
   <>
-    <label>컨텐츠</label>
+    <label>콘텐츠 타입</label>
     <select
       className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
       {...register("contentTypeId")}

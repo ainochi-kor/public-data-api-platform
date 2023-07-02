@@ -56,7 +56,7 @@ const EventInformation: NextPage = () => {
     <div className="py-4">
       <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">행사 정보 조회</h1>
-        <p>행사정보목록을 조회한다. 컨텐츠 타입이 ‘행사’일 경우에만 유효하다</p>
+        <p>행사정보목록을 조회한다. 콘텐츠 타입이 ‘행사’일 경우에만 유효하다</p>
         <InputLayout>
           <input
             className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}

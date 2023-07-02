@@ -49,7 +49,7 @@ const StayInformation: NextPage = () => {
       <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">숙박 정보 조회</h1>
         <p>
-          숙박정보 검색목록을 조회한다. 컨텐츠 타입이 ‘숙박’일 경우에만
+          숙박정보 검색목록을 조회한다. 콘텐츠 타입이 ‘숙박’일 경우에만
           유효하다.
         </p>
         <InputLayout>
