@@ -1,16 +1,32 @@
 import Button from "@/components/Button";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetAreaBasedListParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import {
+  AreaParam,
+  CategoryParam,
+  ContentTypeId,
+  GetAreaBasedListParam,
+} from "@/types/traval.type";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import InputLayout from "@/components/Layout/InputLayout";
+import SelectContentType from "@/components/Select/SelectContentType";
+import SelectAreaCode from "@/components/Select/SelectAreaCode";
+import SelectCategory from "@/components/Select/SelectCategory";
+
+export interface AreaBasedSyncListParam extends AreaParam, CategoryParam {
+  contentTypeId?: ContentTypeId;
+}
 
 const AreaBasedList: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<GetAreaBasedListParam>();
 
-  const param: GetAreaBasedListParam = useMemo(() => {
-    return {
+  const onSubmit: SubmitHandler<AreaBasedSyncListParam> = (data) => {
+    console.log(data);
+
+    const param: GetAreaBasedListParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
@@ -19,21 +35,16 @@ const AreaBasedList: NextPage = () => {
       modifiedtime: "",
       listYN: "Y",
       arrange: "A",
-      contentTypeId: "12",
-      areaCode: "",
-      sigunguCode: "",
-      cat1: "",
-      cat2: "",
-      cat3: "",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getAreaBasedListCode"],
-    queryFn: () => oddsServices.getAreaBasedListCode(param),
-    enabled: true, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetAreaBasedListParam) => oddsServices.getAreaBasedListCode(param)
+  );
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -44,22 +55,21 @@ const AreaBasedList: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">지역기반 관광정보 조회</h1>
+        <InputLayout>
+          <SelectContentType register={register} />
+          <SelectAreaCode register={register} />
+          <SelectCategory register={register} />
+        </InputLayout>
         <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
-            검색하기
-          </Button>
+          <Button type="submit">검색하기</Button>
         </div>
         <p>
           지역기반 관광정보파라미터 타입에 따라서 제목순,수정일순,등록일순
           정렬검색목록을 조회하는 기능
         </p>
-      </header>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body?.items?.item?.map((data) => {
           return (

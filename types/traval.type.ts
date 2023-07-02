@@ -38,6 +38,12 @@ export interface AreaParam {
   sigunguCode?: string;
 }
 
+export interface CategoryParam {
+  cat1?: string;
+  cat2?: string;
+  cat3?: string;
+}
+
 export interface GetlocationBasedListParam extends CommonParam {
   listYN?: ListYN;
   arrange?: Arrange;
@@ -329,15 +335,15 @@ export interface GetSearchDetailImageItem {
 }
 
 //* 관광정보 동기화 목록 조회
-export interface GetAreaBasedSyncListParam extends CommonParam, AreaParam {
+export interface GetAreaBasedSyncListParam
+  extends CommonParam,
+    AreaParam,
+    CategoryParam {
   showflag: "1" | "0"; // 컨텐츠표출여부(1=표출, 0=비표출)
   modifiedtime: string;
   listYN: ListYN;
   arrange: Arrange;
   contentTypeId: ContentTypeId;
-  cat1: string;
-  cat2: string;
-  cat3: string;
 }
 
 export interface GetAreaBasedSyncListResponse {
@@ -462,15 +468,13 @@ export interface GetCategoryCodeItem {
 }
 
 //* 지역기반 관광정보 조회
-export interface GetAreaBasedListParam extends CommonParam {
+export interface GetAreaBasedListParam
+  extends CommonParam,
+    AreaParam,
+    CategoryParam {
   listYN?: ListYN;
   arrange?: Arrange;
   contentTypeId?: ContentTypeId;
-  areaCode?: string;
-  sigunguCode?: string;
-  cat1?: string;
-  cat2?: string;
-  cat3?: string;
   modifiedtime?: string;
 }
 

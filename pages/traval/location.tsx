@@ -1,13 +1,19 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
+import SelectContentType from "@/components/Select/SelectContentType";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
-import { GetlocationBasedListParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import { ContentTypeId, GetlocationBasedListParam } from "@/types/traval.type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const LocationBase: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<{
+    contentTypeId: ContentTypeId;
+  }>();
   const [coordinates, setCoordinates] = useState<{
     x: string | null;
     y: string | null;
@@ -16,8 +22,10 @@ const LocationBase: NextPage = () => {
     y: null,
   });
 
-  const param: GetlocationBasedListParam = useMemo(() => {
-    return {
+  const onSubmit: SubmitHandler<{ contentTypeId: ContentTypeId }> = (data) => {
+    console.log(data);
+
+    const param: GetlocationBasedListParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
@@ -28,16 +36,17 @@ const LocationBase: NextPage = () => {
       radius: "1000",
       listYN: "Y",
       arrange: "A",
-      contentTypeId: "15",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, [coordinates]);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getlocationBasedListData"],
-    queryFn: () => oddsServices.getlocationBasedList(param),
-    enabled: false, // 자동 실행 Off, refetch를 통한 수동 실행.
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetlocationBasedListParam) =>
+      oddsServices.getlocationBasedList(param)
+  );
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -56,12 +65,6 @@ const LocationBase: NextPage = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (coordinates.x && coordinates.y) {
-      refetch();
-    }
-  }, [coordinates]);
-
   if (isLoading) {
     <div>isLoading</div>;
   }
@@ -71,20 +74,25 @@ const LocationBase: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4 space-y-4">
+      <form className="px-8 pb-4 space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">위치기반 관광정보조회 </h1>
         <p>
           위치기반 관광정보파라미터 타입에 따라서 제목순,수정일순,등록일순
           정렬검색목록을 조회하는 기능
         </p>
-        <Button
-          onClick={() => {
-            refetch();
-          }}
-        >
-          다시 불러오기
-        </Button>
-      </header>
+        <p>위치를 받지 못하면 버튼이 비활성화 됩니다.</p>
+        <InputLayout>
+          <SelectContentType register={register} />
+        </InputLayout>
+        <div className="flex items-center space-x-2 py-4 ">
+          <Button
+            type="submit"
+            disabled={coordinates.x === null || coordinates.y === null}
+          >
+            검색하기
+          </Button>
+        </div>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body?.items?.item?.map((data) => {
           return (

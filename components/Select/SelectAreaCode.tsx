@@ -1,4 +1,4 @@
-import { AREA_CODE } from "@/constants/common";
+import { AREA_CODE } from "@/constants/areaCode";
 import { AreaCode } from "@/types/traval.type";
 import { useMemo, useState } from "react";
 import { UseFormRegister } from "react-hook-form";

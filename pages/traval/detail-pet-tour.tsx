@@ -1,30 +1,32 @@
 import Button from "@/components/Button";
+import InputLayout from "@/components/Layout/InputLayout";
 import TravalServices, { axiosServer } from "@/services/traval-kor";
 import { GetDetailPetTourParam } from "@/types/traval.type";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { NextPage } from "next";
-import { useMemo } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 const DetailPetTour: NextPage = () => {
   const oddsServices = new TravalServices(axiosServer);
+  const { register, handleSubmit } = useForm<{ contentId: string }>();
 
-  const param: GetDetailPetTourParam = useMemo(() => {
-    return {
+  const onSubmit: SubmitHandler<{ contentId: string }> = (data) => {
+    const param: GetDetailPetTourParam = {
       numOfRows: 10,
       pageNo: 1,
       _type: "json",
       MobileOS: "ETC",
       MobileApp: "AppTest",
-      contentId: "",
       serviceKey: process.env.NEXT_PUBLIC_KOREA_TRAVAL_KEY!,
+      ...data,
     };
-  }, []);
 
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ["getDetailPetTour"],
-    queryFn: () => oddsServices.getDetailPetTour(param),
-    enabled: true,
-  });
+    mutate(param);
+  };
+
+  const { isLoading, error, data, mutate } = useMutation(
+    (param: GetDetailPetTourParam) => oddsServices.getDetailPetTour(param)
+  );
 
   if (isLoading) {
     <div>isLoading</div>;
@@ -35,19 +37,20 @@ const DetailPetTour: NextPage = () => {
 
   return (
     <div className="py-4">
-      <header className="px-8 pb-4">
+      <form className="px-8 pb-4" onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-3xl">반려동물 동반 여행 조회</h1>
-        <div className="flex items-center space-x-2 py-4 ">
-          <Button
-            onClick={() => {
-              refetch();
-            }}
-          >
-            검색하기
-          </Button>
-        </div>
         <p>타입별 반려동물 동반 여행 정보를 조회하는 기능입니다.</p>
-      </header>
+        <InputLayout>
+          <input
+            className={`h-12 bg-input w-full rounded px-4 text-black outline-none border border-gray-300`}
+            placeholder="콘텐츠ID(옵션,미기입시 전체목록조회)"
+            {...register("contentId")}
+          />
+        </InputLayout>
+        <div className="flex items-center space-x-2 py-4 ">
+          <Button type="submit">검색하기</Button>
+        </div>
+      </form>
       <div className="font-mono text-sm w-screen px-8">
         {data?.response?.body?.items?.item?.map((data, idx) => {
           return (
